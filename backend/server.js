@@ -56,6 +56,16 @@ todoRoutes.route('/add').post(function(req, res) {
             res.status(400).send('adding new todo failed');
         });
 });
+
+todoRoutes.route('/delete/:id').delete(function(req, res) {
+    Todo.findByIdAndRemove(req.params.id, function(err, todo) {
+        if (!todo)
+            res.status(404).send("data is not found");
+        else
+            console.log('delete success');
+
+    });
+});
 app.use('/todos', todoRoutes);
 app.listen(PORT, function() {
     console.log("Server is running on Port: " + PORT);
